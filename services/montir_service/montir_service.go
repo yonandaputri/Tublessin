@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 	"net"
 	"tublessin/common/config"
@@ -23,12 +24,7 @@ const (
 
 func main() {
 	srv := grpc.NewServer()
-	db, err := sql.Open(dbDriver, dbUser+":"+dbPass+"@tcp("+dbHost+":"+dbPort+")/"+dbName)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	montirServer := domain.NewMontirController(db)
+	montirServer := domain.NewMontirController(connectToDatabase())
 	model.RegisterMontirServer(srv, montirServer)
 
 	log.Println("Starting Montir-Service server at port", config.SERVICE_MONTIR_PORT)
@@ -38,4 +34,19 @@ func main() {
 	}
 
 	log.Fatal(srv.Serve(l))
+}
+
+func connectToDatabase() *sql.DB {
+	db, err := sql.Open(dbDriver, dbUser+":"+dbPass+"@tcp("+dbHost+":"+dbPort+")/"+dbName)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if err := db.Ping(); err != nil {
+		log.Print(err)
+		fmt.Scanln()
+		log.Fatal(err)
+	}
+	log.Println("DataBase Successfully Connected")
+	return db
 }
