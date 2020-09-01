@@ -8,11 +8,11 @@ import (
 )
 
 type LoginControllerApi struct {
-	LoginServiceApi LoginServiceApiInterface
+	LoginUsecaseApi LoginUsecaseApiInterface
 }
 
 func NewLoginControllerApi(loginService model.LoginClient) *LoginControllerApi {
-	return &LoginControllerApi{LoginServiceApi: NewLoginServiceApi(loginService)}
+	return &LoginControllerApi{LoginUsecaseApi: NewLoginUsecaseApi(loginService)}
 }
 
 // Nangkep request dari depan yang nanti nya akan di teruskan ke Login-Service
@@ -27,11 +27,11 @@ func (c LoginControllerApi) HandleLoginMontir() func(w http.ResponseWriter, r *h
 		log.Print(`username -> `, montirAccount.Username)
 		log.Print(`password -> `, montirAccount.Password)
 
-		result, err := c.LoginServiceApi.HandleLoginMontir(&montirAccount)
+		result, err := c.LoginUsecaseApi.HandleLoginMontir(&montirAccount)
 		if err != nil {
 			log.Print(`gagal login`)
 			w.WriteHeader(http.StatusBadRequest)
-			json.NewEncoder(w).Encode(err.Error())
+			json.NewEncoder(w).Encode(result)
 			return
 		}
 

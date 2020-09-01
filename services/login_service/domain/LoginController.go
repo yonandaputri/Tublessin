@@ -8,11 +8,11 @@ import (
 )
 
 type LoginServer struct {
-	LoginService LoginServiceInterface
+	LoginUsecase LoginUsecaseInterface
 }
 
 func NewLoginController(client model.MontirClient) *LoginServer {
-	return &LoginServer{NewLoginService(client)}
+	return &LoginServer{NewLoginUsecase(client)}
 }
 
 // Disini adalah pusat Method2 dari Login-Service, method2 disini mengacu pada Service login pada file login.proto
@@ -22,12 +22,12 @@ func (c LoginServer) MontirLogin(ctx context.Context, param *model.MontirLoginFo
 	log.Print(`username -> `, montirAccount.Username)
 	log.Print(`password -> `, montirAccount.Password)
 
-	result, err := c.LoginService.MontirLogin(&montirAccount)
-	MontirId := strconv.Itoa(int(result.Id))
+	result, err := c.LoginUsecase.MontirLogin(&montirAccount)
 	if err != nil {
-		return &model.LoginResponeMessage{Message: MontirId, Token: ""}, err
+		return nil, err
 	}
 
+	MontirId := strconv.Itoa(int(result.Id))
 	return &model.LoginResponeMessage{Message: MontirId, Token: "asdasdqweqweq123123123"}, nil
 }
 

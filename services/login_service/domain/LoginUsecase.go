@@ -5,21 +5,21 @@ import (
 	"tublessin/common/model"
 )
 
-type LoginService struct {
+type LoginUsecase struct {
 	MontirService model.MontirClient
 }
 
-type LoginServiceInterface interface {
+type LoginUsecaseInterface interface {
 	MontirLogin(montirAccount *model.MontirAccount) (*model.MontirAccount, error)
 	UserLogin()
 }
 
-func NewLoginService(client model.MontirClient) LoginServiceInterface {
-	return &LoginService{client}
+func NewLoginUsecase(client model.MontirClient) LoginUsecaseInterface {
+	return &LoginUsecase{client}
 }
 
 // Karna Login-Service tidak bisa akses langsung ke Database Montir, jadi harus dioper ke Montir-Service
-func (s LoginService) MontirLogin(montirAccount *model.MontirAccount) (*model.MontirAccount, error) {
+func (s LoginUsecase) MontirLogin(montirAccount *model.MontirAccount) (*model.MontirAccount, error) {
 	result, err := s.MontirService.Login(context.Background(), montirAccount)
 	if err != nil {
 		return nil, err
@@ -28,4 +28,4 @@ func (s LoginService) MontirLogin(montirAccount *model.MontirAccount) (*model.Mo
 	return result, nil
 }
 
-func (s LoginService) UserLogin() {}
+func (s LoginUsecase) UserLogin() {}

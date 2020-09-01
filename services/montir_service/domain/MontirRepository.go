@@ -2,7 +2,6 @@ package domain
 
 import (
 	"database/sql"
-	"errors"
 	"log"
 	"tublessin/common/model"
 )
@@ -27,7 +26,7 @@ func (r MontirRepository) Login(username, status string) (*model.MontirAccount, 
 	err := results.Scan(&montirAccount.Id, &montirAccount.Username, &montirAccount.Password, &montirAccount.StatusAccount)
 	if err != nil {
 		log.Print(err.Error())
-		return nil, errors.New("Username atau Password salah")
+		return nil, err
 	}
 
 	return &montirAccount, nil

@@ -16,6 +16,7 @@ func InitLoginRoute(mainRoute string, r *mux.Router) {
 	subRouter.HandleFunc("/user", loginControllerApi.HandleLoginUser()).Methods("POST")
 }
 
+// Untuk Connect ke Service-Login
 func connectToServiceLogin() model.LoginClient {
 	port := config.SERVICE_LOGIN_PORT
 	conn, err := grpc.Dial(port, grpc.WithInsecure())
