@@ -18,8 +18,7 @@ func NewLoginController(clientMontir model.MontirClient, clientUser model.UserCl
 func (c LoginServer) MontirLogin(ctx context.Context, param *model.MontirLoginForm) (*model.LoginResponeMessage, error) {
 	montirAccount := model.MontirAccount{Username: param.Username, Password: param.Password}
 
-	log.Print(`username -> `, montirAccount.Username)
-	log.Print(`password -> `, montirAccount.Password)
+	log.Print(`username -> `, montirAccount.Username, "Mencoba Login")
 
 	result, err := c.LoginUsecase.MontirLogin(&montirAccount)
 	if err != nil {
@@ -41,8 +40,7 @@ func (c LoginServer) MontirLogin(ctx context.Context, param *model.MontirLoginFo
 func (c LoginServer) UserLogin(ctx context.Context, param *model.UserLoginForm) (*model.LoginResponeMessage, error) {
 	userAccount := model.UserAccount{Username: param.Username, Password: param.Password}
 
-	log.Print(`username -> `, userAccount.Username)
-	log.Print(`password -> `, userAccount.Password)
+	log.Print(`username -> `, userAccount.Username, "Mencoba Login")
 
 	result, err := c.LoginUsecase.UserLogin(&userAccount)
 	if err != nil {

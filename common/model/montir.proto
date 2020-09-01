@@ -8,11 +8,12 @@ service Montir {
     rpc Login(MontirAccount) returns (MontirAccount) {}
     rpc UpdateMontirAccount(MontirAccount) returns (MontirResponeMessage) {}
     rpc UpdateMontirProfile(MontirProfile) returns (MontirResponeMessage) {}
-    rpc getMontirProfile(google.protobuf.Empty) returns (MontirProfile) {}
+    rpc getMontirProfile(google.protobuf.Empty) returns (MontirResponeMessage) {}
 }
 
 message MontirResponeMessage {
     string response = 1;
+    MontirAccount result = 2;
 }
 
 message MontirAccount {
@@ -29,11 +30,11 @@ message MontirProfile {
     string lastname = 3;
     string born_date = 4;
     string gender = 5;
-    int32 ktp = 6;
+    string ktp = 6;
     string address = 7;
     string city = 8;
     string email = 9;
-    int32 phone_number = 10;
+    string phone_number = 10;
     string imageURL = 11;
     string verified_account = 12;
     string date_updated = 13;

@@ -1,5 +1,5 @@
 package router
 
 const (
-	LOGIN_MAIN_ROUTE = "/login"
+	LOGIN_MAIN_ROUTE = "/account"
 )

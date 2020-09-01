@@ -30,5 +30,7 @@ func configServer() {
 
 func printRouteList() {
 	log.Println("======== ROUTE LIST ========")
-	log.Println("http://"+serverHost+":"+serverPort+LOGIN_MAIN_ROUTE+"/montir", "(POST)")
+	log.Println("http://"+serverHost+":"+serverPort+LOGIN_MAIN_ROUTE+"/login/montir", "(POST)")
+	log.Println("http://"+serverHost+":"+serverPort+LOGIN_MAIN_ROUTE+"/login/user", "(POST)")
+	log.Println("http://"+serverHost+":"+serverPort+LOGIN_MAIN_ROUTE+"/register/montir", "(POST)")
 }

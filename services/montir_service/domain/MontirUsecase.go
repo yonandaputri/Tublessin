@@ -2,6 +2,7 @@ package domain
 
 import (
 	"database/sql"
+	"errors"
 	"tublessin/common/model"
 )
 
@@ -11,6 +12,7 @@ type MontirUsecase struct {
 
 type MontirUsecaseInterface interface {
 	Login(montirAccount *model.MontirAccount) (*model.MontirAccount, error)
+	RegisterNewMontir(montirAccount *model.MontirAccount) (*model.MontirResponeMessage, error)
 }
 
 func NewMontirUsecase(db *sql.DB) MontirUsecaseInterface {
@@ -25,4 +27,16 @@ func (s MontirUsecase) Login(montirAccount *model.MontirAccount) (*model.MontirA
 	}
 
 	return montirDetail, nil
+}
+
+func (s MontirUsecase) RegisterNewMontir(montirAccount *model.MontirAccount) (*model.MontirResponeMessage, error) {
+	if montirAccount == nil || montirAccount.Profile == nil {
+		return nil, errors.New("Body Cannot Empty")
+	}
+
+	result, err := s.MontirRepository.RegisterNewMontir(montirAccount)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }

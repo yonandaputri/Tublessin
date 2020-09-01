@@ -11,9 +11,10 @@ import (
 
 func InitLoginRoute(mainRoute string, r *mux.Router) {
 	subRouter := r.PathPrefix(mainRoute).Subrouter()
-	loginControllerApi := NewLoginControllerApi(connectToServiceLogin())
-	subRouter.HandleFunc("/montir", loginControllerApi.HandleLoginMontir()).Methods("POST")
-	subRouter.HandleFunc("/user", loginControllerApi.HandleLoginUser()).Methods("POST")
+	loginControllerApi := NewLoginControllerApi(connectToServiceLogin(), connectToServiceMontir(), connectToServiceUser())
+	subRouter.HandleFunc("/login/montir", loginControllerApi.HandleLoginMontir()).Methods("POST")
+	subRouter.HandleFunc("/login/user", loginControllerApi.HandleLoginUser()).Methods("POST")
+	subRouter.HandleFunc("/register/montir", loginControllerApi.HandleRegisterNewMontir()).Methods("POST")
 }
 
 // Untuk Connect ke Service-Login
@@ -25,4 +26,26 @@ func connectToServiceLogin() model.LoginClient {
 	}
 
 	return model.NewLoginClient(conn)
+}
+
+// Untuk Connect ke Service-Montir
+func connectToServiceMontir() model.MontirClient {
+	port := config.SERVICE_MONTIR_PORT
+	conn, err := grpc.Dial(port, grpc.WithInsecure())
+	if err != nil {
+		log.Fatal("Could not Connect to Montir-Service", port, err)
+	}
+
+	return model.NewMontirClient(conn)
+}
+
+// Untuk Connect ke Service-User
+func connectToServiceUser() model.UserClient {
+	port := config.SERVICE_USER_PORT
+	conn, err := grpc.Dial(port, grpc.WithInsecure())
+	if err != nil {
+		log.Fatal("Could not Connect to User-Service", port, err)
+	}
+
+	return model.NewUserClient(conn)
 }
