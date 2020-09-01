@@ -3,6 +3,7 @@ package domain
 import (
 	"context"
 	"database/sql"
+	"log"
 	"tublessin/common/model"
 
 	"github.com/golang/protobuf/ptypes/empty"
@@ -17,6 +18,9 @@ func NewMontirController(db *sql.DB) *MontirServer {
 }
 
 func (c MontirServer) Login(ctx context.Context, param *model.MontirAccount) (*model.MontirAccount, error) {
+	log.Print(`username -> `, param.Username)
+	log.Print(`password -> `, param.Password)
+
 	result, err := c.MontirService.Login(param)
 	if err != nil {
 		return nil, err
