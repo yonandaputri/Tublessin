@@ -13,7 +13,7 @@ import (
 func main() {
 	srv := grpc.NewServer()
 
-	loginServer := domain.NewLoginController(serviceMontir())
+	loginServer := domain.NewLoginController(connectToServiceMontir())
 	model.RegisterLoginServer(srv, loginServer)
 
 	log.Println("Starting Login-Service server at port", config.SERVICE_LOGIN_PORT)
@@ -25,11 +25,11 @@ func main() {
 	log.Fatal(srv.Serve(l))
 }
 
-func serviceMontir() model.MontirClient {
+func connectToServiceMontir() model.MontirClient {
 	port := config.SERVICE_MONTIR_PORT
 	conn, err := grpc.Dial(port, grpc.WithInsecure())
 	if err != nil {
-		log.Fatal("could not connect to", port, err)
+		log.Fatal("Could not Connect to Montir-Service", port, err)
 	}
 
 	return model.NewMontirClient(conn)
