@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+package model;
+import "google/protobuf/Empty.proto";
+
+service Montir {
+    rpc RegisterNewMontir(MontirAccount) returns (MontirResponeMessage) {}
+    rpc Login(MontirAccount) returns (MontirAccount) {}
+    rpc UpdateMontirAccount(MontirAccount) returns (MontirResponeMessage) {}
+    rpc UpdateMontirProfile(MontirProfile) returns (MontirResponeMessage) {}
+    rpc getMontirProfile(google.protobuf.Empty) returns (MontirProfile) {}
+}
+
+message MontirResponeMessage {
+    string response = 1;
+}
+
+message MontirAccount {
+    int32 id = 1;
+    string username = 2;
+    string password = 3;
+    string status_account = 5;
+    MontirProfile profile = 6;
+}
+
+message MontirProfile {
+    int32 id = 1;
+    string firstname = 2;
+    string lastname = 3;
+    string born_date = 4;
+    string gender = 5;
+    int32 ktp = 6;
+    string address = 7;
+    string city = 8;
+    string email = 9;
+    int32 phone_number = 10;
+    string imageURL = 11;
+    string verified_account = 12;
+    string date_updated = 13;
+    string date_created = 14;
+    MontirStatus status = 15;
+    MontirRating rating = 16;
+    MontirLocation location = 17;
+}
+
+message MontirRating {
+    int32 rating = 1;
+    string rater_id = 2;
+    string review = 3;
+    string date_created = 4;
+}
+
+message MontirLocation {
+    double latitude = 1;
+    double longitude = 2;
+    string date_updated = 3;
+}
+
+message MontirStatus {
+    string status_operational = 1;
+    string status_activity = 2;
+    string date_updated = 3;
+}
+

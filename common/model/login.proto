@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package model;
+
+service Login {
+    rpc MontirLogin(MontirLoginForm) returns (LoginResponeMessage){}
+    rpc UserLogin(UserLoginForm) returns (LoginResponeMessage){}
+}
+
+message LoginResponeMessage {
+    string message = 1;
+    string token = 2;
+}
+
+message MontirLoginForm {
+    string username = 1;
+    string password = 2;
+}
+
+message UserLoginForm {
+    string username = 1;
+    string password = 2;
+}
