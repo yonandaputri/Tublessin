@@ -10,14 +10,29 @@ Cara Menjalankan Backend
 
 Login Service Api List
 
-/login/montir
+/account/login/montir
 {
     "username": "kucing",
     "password": "admin"
 }
 
-/login/user
+/account/login/user
 {
     "username": "kucing",
     "password": "admin"
+}
+
+/account/register/montir
+
+{
+    "username": "cicakakecil",
+    "password": "admin",
+    "profile": {
+        "firstname": "cicak",
+        "lastname": "Hitam",
+        "gender": "L",
+        "city": "Jakarta",
+        "email": "kucing@yahoo.com",
+        "phone_number": "08982227972"
+    }
 }
