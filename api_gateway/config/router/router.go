@@ -18,6 +18,7 @@ func CreateRouter() *mux.Router {
 func StartServer(r *mux.Router) {
 	configServer()
 	log.Println("Server Start at http://" + serverHost + ":" + serverPort)
+	printRouteList()
 	http.ListenAndServe(serverHost+":"+serverPort, r)
 }
 
@@ -25,4 +26,9 @@ func StartServer(r *mux.Router) {
 func configServer() {
 	serverHost = "localhost"
 	serverPort = "8080"
+}
+
+func printRouteList() {
+	log.Println("======== ROUTE LIST ========")
+	log.Println("http://"+serverHost+":"+serverPort+LOGIN_MAIN_ROUTE+"/montir", "(POST)")
 }
