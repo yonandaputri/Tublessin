@@ -13,7 +13,8 @@ service Montir {
 
 message MontirResponeMessage {
     string response = 1;
-    MontirAccount result = 2;
+    string code = 2;
+    MontirAccount result = 3;
 }
 
 message MontirAccount {

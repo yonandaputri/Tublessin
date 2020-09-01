@@ -72,5 +72,5 @@ func (r MontirRepository) RegisterNewMontir(m *model.MontirAccount) (*model.Mont
 	}
 	tx.Commit()
 
-	return &model.MontirResponeMessage{Response: "Inserting New Montir Success", Result: m}, nil
+	return &model.MontirResponeMessage{Response: "Inserting New Montir Success", Code: "200", Result: m}, nil
 }

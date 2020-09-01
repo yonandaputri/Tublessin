@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"strings"
 	"tublessin/common/model"
 )
 
@@ -71,8 +72,14 @@ func (c LoginControllerApi) HandleRegisterNewMontir() func(w http.ResponseWriter
 		result, err := c.LoginUsecaseApi.HandleRegisterNewMontir(&montirAccount)
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
-			json.NewEncoder(w).Encode(&model.MontirResponeMessage{Response: err.Error()})
-			return
+			if strings.Contains(err.Error(), "username_UNIQUE") {
+				json.NewEncoder(w).Encode(&model.MontirResponeMessage{Response: "Username Sudah Digunakan", Code: "900"})
+				return
+			} else if strings.Contains(err.Error(), "phone_number_UNIQUE") {
+				json.NewEncoder(w).Encode(&model.MontirResponeMessage{Response: "Nomor Telefon Sudah Digunakan", Code: "800"})
+				return
+			}
+			json.NewEncoder(w).Encode(&model.MontirResponeMessage{Response: err.Error(), Code: "400"})
 		}
 
 		w.WriteHeader(http.StatusOK)
