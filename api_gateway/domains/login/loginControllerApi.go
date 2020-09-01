@@ -15,6 +15,7 @@ func NewLoginControllerApi(loginService model.LoginClient) *LoginControllerApi {
 	return &LoginControllerApi{LoginServiceApi: NewLoginServiceApi(loginService)}
 }
 
+// Nangkep request dari depan
 func (c LoginControllerApi) HandleLoginMontir() func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")

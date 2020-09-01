@@ -15,6 +15,7 @@ func NewLoginController(client model.MontirClient) *LoginServer {
 	return &LoginServer{NewLoginService(client)}
 }
 
+// Disini adalah pusat Method2 dari Login-Service
 func (c LoginServer) MontirLogin(ctx context.Context, param *model.MontirLoginForm) (*model.LoginResponeMessage, error) {
 	montirAccount := model.MontirAccount{Username: param.Username, Password: param.Password}
 

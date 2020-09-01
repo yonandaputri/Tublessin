@@ -17,6 +17,7 @@ func NewMontirService(db *sql.DB) MontirServiceInterface {
 	return &MontirService{NewMontirRepository(db)}
 }
 
+// Ini Adalah Layer Service dari Montir-Service, untuk menangani bussiness logic
 func (s MontirService) Login(montirAccount *model.MontirAccount) (*model.MontirAccount, error) {
 	montirDetail, err := s.MontirRepository.Login(montirAccount.Username, "A")
 	if err != nil {

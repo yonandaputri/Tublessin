@@ -19,6 +19,7 @@ func NewMontirRepository(db *sql.DB) MontirRepositoryInterface {
 	return &MontirRepository{db}
 }
 
+// Disini adalah layer Repository dari Montir-Service, untuk berkomunikasi dengan database
 func (r MontirRepository) Login(username, status string) (*model.MontirAccount, error) {
 	results := r.db.QueryRow("SELECT * FROM montir_account WHERE username=? AND status_account=?", username, status)
 	var montirAccount model.MontirAccount

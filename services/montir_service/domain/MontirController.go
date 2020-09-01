@@ -17,6 +17,7 @@ func NewMontirController(db *sql.DB) *MontirServer {
 	return &MontirServer{NewMontirService(db)}
 }
 
+// Disini adalah pusat Method2 dari Montir-Service
 func (c MontirServer) Login(ctx context.Context, param *model.MontirAccount) (*model.MontirAccount, error) {
 	log.Print(`username -> `, param.Username)
 	log.Print(`password -> `, param.Password)
