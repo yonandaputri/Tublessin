@@ -29,7 +29,6 @@ func (c LoginControllerApi) HandleLoginMontir() func(w http.ResponseWriter, r *h
 
 		result, err := c.LoginUsecaseApi.HandleLoginMontir(&montirAccount)
 		if err != nil {
-			log.Print(`gagal login`)
 			w.WriteHeader(http.StatusBadRequest)
 			json.NewEncoder(w).Encode(result)
 			return
@@ -43,5 +42,23 @@ func (c LoginControllerApi) HandleLoginMontir() func(w http.ResponseWriter, r *h
 
 func (c LoginControllerApi) HandleLoginUser() func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+
+		var userAccount model.UserLoginForm
+		json.NewDecoder(r.Body).Decode(&userAccount)
+
+		log.Print(`username -> `, userAccount.Username)
+		log.Print(`password -> `, userAccount.Password)
+
+		result, err := c.LoginUsecaseApi.HandleLoginUser(&userAccount)
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			json.NewEncoder(w).Encode(result)
+			return
+		}
+
+		log.Print(`Success Login`)
+		w.WriteHeader(http.StatusOK)
+		json.NewEncoder(w).Encode(result)
 	}
 }

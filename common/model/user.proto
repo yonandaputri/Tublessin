@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package model;
+
+
+service User {
+    rpc RegisterNewUser(UserAccount) returns (UserResponeMessage) {}
+    rpc Login(UserAccount) returns (UserAccount) {}
+    rpc UpdateUserAccount(UserAccount) returns (UserResponeMessage) {}
+    rpc UpdateUserProfile(UserProfile) returns (UserResponeMessage) {}
+    rpc getUserProfile(UserProfile) returns (UserProfile) {}
+}
+
+message UserResponeMessage {
+    string response = 1;
+    UserAccount profile = 2;
+}
+
+message UserAccount {
+    int32 id = 1;
+    string username = 2;
+    string password = 3;
+    string date_created = 4;
+    UserProfile profile = 5;
+}
+
+message UserProfile {
+    int32 id = 1;
+    string firstname = 2;
+    string lastname = 3;
+    string gender = 4;
+    int32 phone_number = 5;
+    string email = 6;
+    string imageURL = 7;
+    string date_updated = 8;
+    UserLocation location = 9;
+}
+
+message UserLocation {
+    double latitude = 1;
+    double longitude = 2;
+    string date_updated = 3;
+}
+

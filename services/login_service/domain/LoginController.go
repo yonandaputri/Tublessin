@@ -3,7 +3,6 @@ package domain
 import (
 	"context"
 	"log"
-	"strconv"
 	"tublessin/common/model"
 )
 
@@ -11,8 +10,8 @@ type LoginServer struct {
 	LoginUsecase LoginUsecaseInterface
 }
 
-func NewLoginController(client model.MontirClient) *LoginServer {
-	return &LoginServer{NewLoginUsecase(client)}
+func NewLoginController(clientMontir model.MontirClient, clientUser model.UserClient) *LoginServer {
+	return &LoginServer{NewLoginUsecase(clientMontir, clientUser)}
 }
 
 // Disini adalah pusat Method2 dari Login-Service, method2 disini mengacu pada Service login pada file login.proto
@@ -27,10 +26,37 @@ func (c LoginServer) MontirLogin(ctx context.Context, param *model.MontirLoginFo
 		return nil, err
 	}
 
-	MontirId := strconv.Itoa(int(result.Id))
-	return &model.LoginResponeMessage{Message: MontirId, Token: "asdasdqweqweq123123123"}, nil
+	return &model.LoginResponeMessage{
+		Message: "Login Success",
+		Token:   "ini nanti di isi token beneran",
+		Account: &model.LoginAccountInfo{
+			Id:            result.Id,
+			Username:      result.Username,
+			Password:      result.Password,
+			StatusAccount: result.StatusAccount,
+		},
+	}, nil
 }
 
 func (c LoginServer) UserLogin(ctx context.Context, param *model.UserLoginForm) (*model.LoginResponeMessage, error) {
-	return &model.LoginResponeMessage{}, nil
+	userAccount := model.UserAccount{Username: param.Username, Password: param.Password}
+
+	log.Print(`username -> `, userAccount.Username)
+	log.Print(`password -> `, userAccount.Password)
+
+	result, err := c.LoginUsecase.UserLogin(&userAccount)
+	if err != nil {
+		return nil, err
+	}
+
+	return &model.LoginResponeMessage{
+		Message: "Login Success",
+		Token:   "ini nanti di isi token beneran",
+		Account: &model.LoginAccountInfo{
+			Id:            result.Id,
+			Username:      result.Username,
+			Password:      result.Password,
+			StatusAccount: result.DateCreated,
+		},
+	}, nil
 }

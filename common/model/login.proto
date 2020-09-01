@@ -10,6 +10,7 @@ service Login {
 message LoginResponeMessage {
     string message = 1;
     string token = 2;
+    LoginAccountInfo account = 3;
 }
 
 message MontirLoginForm {
@@ -20,4 +21,11 @@ message MontirLoginForm {
 message UserLoginForm {
     string username = 1;
     string password = 2;
+}
+
+message LoginAccountInfo {
+    int32 id = 1;
+    string username = 2;
+    string password = 3;
+    string status_account = 4;
 }
