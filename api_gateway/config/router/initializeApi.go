@@ -12,17 +12,19 @@ type ConfigRouter struct {
 	Router *mux.Router
 }
 
-// NewAppRouter for creating new Route
-func NewAppRouter(r *mux.Router) *ConfigRouter {
-	return &ConfigRouter{Router: r}
-}
-
+// Disini tempat inisialisasi API yang akan di publish keluar
 func (ar *ConfigRouter) InitRouter() {
 	login.InitLoginRoute(LOGIN_MAIN_ROUTE, ar.Router)
 	ar.Router.NotFoundHandler = http.HandlerFunc(notFound)
 }
 
+// NotFound Handler biasa
 func notFound(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNotFound)
 	fmt.Fprint(w, `<h1>404 Status Not Found</h1>`)
+}
+
+// NewAppRouter for creating new Config Router
+func NewAppRouter(r *mux.Router) *ConfigRouter {
+	return &ConfigRouter{Router: r}
 }

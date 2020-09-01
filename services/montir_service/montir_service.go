@@ -13,6 +13,7 @@ import (
 	"google.golang.org/grpc"
 )
 
+// Ini gaboleh di hardcode, nanti diganti jadi environment variabel kalo semua udah siap
 const (
 	dbDriver = "mysql"
 	dbUser   = "root"
