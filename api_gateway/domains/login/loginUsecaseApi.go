@@ -16,6 +16,7 @@ type LoginUsecaseApiInterface interface {
 	HandleLoginMontir(montirAccount *model.MontirLoginForm) (*model.LoginResponeMessage, error)
 	HandleLoginUser(userAccount *model.UserLoginForm) (*model.LoginResponeMessage, error)
 	HandleRegisterNewMontir(montirAccount *model.MontirAccount) (*model.MontirResponeMessage, error)
+	HandleRegisterNewUser(userAccount *model.UserAccount) (*model.UserResponeMessage, error)
 }
 
 func NewLoginUsecaseApi(loginService model.LoginClient, montirService model.MontirClient, userService model.UserClient) LoginUsecaseApiInterface {
@@ -53,6 +54,15 @@ func (s LoginUsecaseApi) HandleLoginUser(userAccount *model.UserLoginForm) (*mod
 
 func (s LoginUsecaseApi) HandleRegisterNewMontir(montirAccount *model.MontirAccount) (*model.MontirResponeMessage, error) {
 	result, err := s.MontirService.RegisterNewMontir(context.Background(), montirAccount)
+	if err != nil {
+		log.Print(err.Error())
+		return nil, err
+	}
+	return result, nil
+}
+
+func (s LoginUsecaseApi) HandleRegisterNewUser(userAccount *model.UserAccount) (*model.UserResponeMessage, error) {
+	result, err := s.UserService.RegisterNewUser(context.Background(), userAccount)
 	if err != nil {
 		log.Print(err.Error())
 		return nil, err

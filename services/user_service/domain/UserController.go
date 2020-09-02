@@ -25,7 +25,12 @@ func (c UserServer) Login(ctx context.Context, param *model.UserAccount) (*model
 }
 
 func (c UserServer) RegisterNewUser(ctx context.Context, param *model.UserAccount) (*model.UserResponeMessage, error) {
-	return &model.UserResponeMessage{Response: ""}, nil
+	userResponeMessage, err := c.UserUsecase.RegisterNewUser(param)
+	if err != nil {
+		return nil, err
+	}
+
+	return userResponeMessage, nil
 }
 
 func (c UserServer) UpdateUserProfileById(ctx context.Context, param *model.UserAccount) (*model.UserResponeMessage, error) {

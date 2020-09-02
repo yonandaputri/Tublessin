@@ -15,6 +15,7 @@ func InitLoginRoute(mainRoute string, r *mux.Router) {
 	subRouter.HandleFunc("/login/montir", loginControllerApi.HandleLoginMontir()).Methods("POST")
 	subRouter.HandleFunc("/login/user", loginControllerApi.HandleLoginUser()).Methods("POST")
 	subRouter.HandleFunc("/register/montir", loginControllerApi.HandleRegisterNewMontir()).Methods("POST")
+	subRouter.HandleFunc("/register/user", loginControllerApi.HandleRegisterNewUser()).Methods("POST")
 }
 
 // Untuk Connect ke Service-Login

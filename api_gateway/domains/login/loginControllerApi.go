@@ -25,7 +25,7 @@ func (c LoginControllerApi) HandleLoginMontir() func(w http.ResponseWriter, r *h
 		var montirAccount model.MontirLoginForm
 		json.NewDecoder(r.Body).Decode(&montirAccount)
 
-		log.Print(`username -> `, montirAccount.Username, "Mencoba Login")
+		log.Print(`username -> `, montirAccount.Username, " Mencoba Login")
 
 		result, err := c.LoginUsecaseApi.HandleLoginMontir(&montirAccount)
 		if err != nil {
@@ -80,6 +80,35 @@ func (c LoginControllerApi) HandleRegisterNewMontir() func(w http.ResponseWriter
 				return
 			}
 			json.NewEncoder(w).Encode(&model.MontirResponeMessage{Response: err.Error(), Code: "400"})
+		}
+
+		w.WriteHeader(http.StatusOK)
+		json.NewEncoder(w).Encode(result)
+	}
+}
+
+func (c LoginControllerApi) HandleRegisterNewUser() func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+
+		var userAccount model.UserAccount
+		json.NewDecoder(r.Body).Decode(&userAccount)
+
+		result, err := c.LoginUsecaseApi.HandleRegisterNewUser(&userAccount)
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			if strings.Contains(err.Error(), "username_UNIQUE") {
+				json.NewEncoder(w).Encode(&model.MontirResponeMessage{Response: "Username Sudah Digunakan", Code: "900"})
+				return
+			} else if strings.Contains(err.Error(), "phone_number_UNIQUE") {
+				json.NewEncoder(w).Encode(&model.MontirResponeMessage{Response: "Nomor Telefon Sudah Digunakan", Code: "800"})
+				return
+			} else if strings.Contains(err.Error(), "email_UNIQUE") {
+				json.NewEncoder(w).Encode(&model.MontirResponeMessage{Response: "Email Sudah Digunakan", Code: "700"})
+				return
+			}
+			json.NewEncoder(w).Encode(&model.MontirResponeMessage{Response: err.Error(), Code: "400"})
+			return
 		}
 
 		w.WriteHeader(http.StatusOK)

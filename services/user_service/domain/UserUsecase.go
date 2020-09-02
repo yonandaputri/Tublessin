@@ -2,6 +2,7 @@ package domain
 
 import (
 	"database/sql"
+	"errors"
 	"tublessin/common/model"
 )
 
@@ -11,6 +12,7 @@ type UserUsecase struct {
 
 type UserUsecaseInterface interface {
 	Login(UserAccount *model.UserAccount) (*model.UserAccount, error)
+	RegisterNewUser(UserAccount *model.UserAccount) (*model.UserResponeMessage, error)
 }
 
 func NewUserUsecase(db *sql.DB) UserUsecaseInterface {
@@ -25,4 +27,17 @@ func (s UserUsecase) Login(UserAccount *model.UserAccount) (*model.UserAccount, 
 	}
 
 	return userDetail, nil
+}
+
+func (s UserUsecase) RegisterNewUser(UserAccount *model.UserAccount) (*model.UserResponeMessage, error) {
+	if UserAccount == nil || UserAccount.Profile == nil {
+		return nil, errors.New("Body Cannot Empty")
+	}
+
+	userResponeMessage, err := s.UserRepository.RegisterNewUser(UserAccount)
+	if err != nil {
+		return nil, err
+	}
+
+	return userResponeMessage, nil
 }
