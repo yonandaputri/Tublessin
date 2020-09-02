@@ -28,16 +28,11 @@ func (c UserServer) RegisterNewUser(ctx context.Context, param *model.UserAccoun
 	return &model.UserResponeMessage{Response: ""}, nil
 }
 
-func (c UserServer) UpdateUserAccount(ctx context.Context, param *model.UserAccount) (*model.UserResponeMessage, error) {
+func (c UserServer) UpdateUserProfileById(ctx context.Context, param *model.UserAccount) (*model.UserResponeMessage, error) {
 	return &model.UserResponeMessage{Response: ""}, nil
 
 }
 
-func (c UserServer) UpdateUserProfile(ctx context.Context, param *model.UserProfile) (*model.UserResponeMessage, error) {
+func (c UserServer) GetUserProfileById(ctx context.Context, param *model.UserAccount) (*model.UserResponeMessage, error) {
 	return &model.UserResponeMessage{Response: ""}, nil
-
-}
-
-func (c UserServer) GetUserProfile(ctx context.Context, param *model.UserProfile) (*model.UserProfile, error) {
-	return &model.UserProfile{Firstname: "", Lastname: ""}, nil
 }

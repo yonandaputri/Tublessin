@@ -2,18 +2,17 @@ syntax = "proto3";
 
 package model;
 
-
 service User {
     rpc RegisterNewUser(UserAccount) returns (UserResponeMessage) {}
     rpc Login(UserAccount) returns (UserAccount) {}
-    rpc UpdateUserAccount(UserAccount) returns (UserResponeMessage) {}
-    rpc UpdateUserProfile(UserProfile) returns (UserResponeMessage) {}
-    rpc getUserProfile(UserProfile) returns (UserProfile) {}
+    rpc UpdateUserProfileById(UserAccount) returns (UserResponeMessage) {}
+    rpc GetUserProfileById(UserAccount) returns (UserResponeMessage) {}
 }
 
 message UserResponeMessage {
     string response = 1;
-    UserAccount profile = 2;
+    string code = 2;
+    UserAccount result = 3;
 }
 
 message UserAccount {
@@ -29,7 +28,7 @@ message UserProfile {
     string firstname = 2;
     string lastname = 3;
     string gender = 4;
-    int32 phone_number = 5;
+    string phone_number = 5;
     string email = 6;
     string imageURL = 7;
     string date_updated = 8;

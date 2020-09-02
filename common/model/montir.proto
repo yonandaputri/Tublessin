@@ -1,14 +1,12 @@
 syntax = "proto3";
 
 package model;
-import "google/protobuf/Empty.proto";
 
 service Montir {
     rpc RegisterNewMontir(MontirAccount) returns (MontirResponeMessage) {}
     rpc Login(MontirAccount) returns (MontirAccount) {}
-    rpc UpdateMontirAccount(MontirAccount) returns (MontirResponeMessage) {}
-    rpc UpdateMontirProfile(MontirProfile) returns (MontirResponeMessage) {}
-    rpc getMontirProfile(google.protobuf.Empty) returns (MontirResponeMessage) {}
+    rpc UpdateMontirProfileByID(MontirAccount) returns (MontirResponeMessage) {}
+    rpc GetMontirProfileByID(MontirAccount) returns (MontirResponeMessage) {}
 }
 
 message MontirResponeMessage {
